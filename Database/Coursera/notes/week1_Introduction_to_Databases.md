@@ -247,3 +247,140 @@ DELETE FROM AUTHOR WHERE AUTHOR_ID IN("A2","A3")
 
 주의) Update 와 마찬가지로, delete 문에서 where절을 지정하지 않으면, 테이블의 모든 행이 삭제된다.
 
+
+
+## 1-3. Relational Database Concepts
+
+### information model and Data model
+
+information model: abstract formal representation of entities (conceptual level)
+
+- Hierarchial model
+- Relational model - Most used! (데이터 독립성을 제공한다)
+- ER data model
+
+#### ERD
+
+ERD: entities (=tables) 와 그들의 관계를 나타낸 다이어그램
+
+data model: blueprint of any database system (concrete level)
+
+<img src="week1_Introduction_to_Databases.assets/image-20200715150611444.png" alt="image-20200715150611444" style="zoom:33%;" />
+
+Entity Relationship Model은 RDB를 디자인하기 위한 도구로써 쓰인다.
+
+ER model에서 entity는 다른 entity들로부터 독립적으로 존재하는 object이다. ERD를 table의 collection으로 변경하는 것은 아주 쉬움.
+
+**ERD의 구성요소**
+
+- entites: 명사, 사람, 장소, 혹은 물건이다. ERD에서 네모로 표현.
+- Attributes: entity가 가지고 있는 속성들로, ERD에서 동그라미로 표현. 하나의 entity에 연결된다.
+
+각 entity는 database에서 table이 되고, attributes는 는 table의 column이 된다.
+
+### Types of relationships
+
+entity 간의 관계를 정의하기 위해 relationship을 사용한다.
+
+**relationship의 구성요소**
+
+- entities sets: ERD에서 사각형으로 표현.
+- Relationship sets: ERD에서 마름모로 표현.
+- crows foot notations (`>`, `<`, `|`)
+
+book과, author 간의 관계를 나타내보자.
+
+**1. 1:1 관계**
+
+<img src="week1_Introduction_to_Databases.assets/image-20200715151648566.png" alt="image-20200715151648566" style="zoom:50%;" />
+
+하나의 책은 하나의 작가에 의해 씌여진다.
+
+**2. 1:n 관계**
+
+<img src="week1_Introduction_to_Databases.assets/image-20200715151738350.png" alt="image-20200715151738350" style="zoom: 50%;" />
+
+하나의 책은 여러 작가에 의해 씌여진다.
+
+**3. n:m 관계**
+
+<img src="week1_Introduction_to_Databases.assets/image-20200715151856117.png" alt="image-20200715151856117" style="zoom:50%;" />
+
+여러의 책이 여러 작가에 의해 씌여지고, 여러 작가가 여러 책을 쓴다.
+
+### Mapping entities to table
+
+ERD는 relational database를 디자인 하기 위한 기초이다.
+
+ERD를 먼저 디자인하고, ERD를 table에 매핑하면 된다.
+
+<img src="week1_Introduction_to_Databases.assets/image-20200715152149392.png" alt="image-20200715152149392" style="zoom:50%;" />
+
+entity는 table이 되고, attributes는 column이 된다. 실제 값들이 추가되면 row가 된다.
+
+### Relational Model Concepts
+
+**relational model의 구성요소**
+
+- relation
+- Sets : unordered collection of distinct elements
+  - items of same type
+  - no order and no duplicates
+
+Relation Database란? **Set** of relations며, **table**의 수학적 용어이다.
+
+Relation은 2가지 파트로 구성되는데, (1) relational schema 와 (2) relational instance 이다.
+
+1. **Relational Schema**는 relation의 이름과, 각 항(속성)의 이름, type을 명시한다.
+2. **Relational Instance**는 columns 들로 만들어진 table이다. column = attributes = field 이고, row = tuple 이다.
+
+[용어]
+
+Degree = column의 개수
+
+Cardinality = row의 개수
+
+### Additional Infornation
+
+#### Create Schema
+
+SQL schema는 schema 이름과, schema를 보유하는 유저를 나타내기 위한 authorization identifier을 포함한다.
+
+Schema의 요소에는 table, constraints, views, domains와 schema를 설명하는 other constructs 등이 있다.
+
+schema는 CREATE SCHEMA 문을 통해 만든다.
+
+```sql
+CREATE SCHEMA LIBRARY AUTHORIZATION ‘Hannah’
+```
+
+사용가능한 Data type에는 numeric, character-string, bit-string, Boolean, DATE, timestamp, 등이 있다.
+
+#### Select 문
+
+select 문은 3개의 절로 구성된다. SELECT, FROM, WHERE.
+
+`<attribute list> ` 는 쿼리에 의해 값이 얻어질 속성들의 리스트이다.
+
+`<table list>` 는 쿼리를 실행할 relation 의 이름들이다.
+
+`<condition>` 은 쿼리에 의해 얻어질 tuple (row) 들을 식별할 conditional(Boolean) expression이다.
+
+또한, 복수의 if-then-else 문을 써야 할 때 아래처럼 하나의 SELECT 문을 사용할 수 있다.
+
+```sql
+SELECT [test expression]
+WHEN [expression1]
+...
+(action)
+...
+WHEN [expression2]
+WHEN [expression3]
+...
+[OTHERWISE]
+...
+(action)
+...
+END
+```
+
